@@ -23,7 +23,7 @@ const Contact = () => {
     useEffect(() => {
         const fetchFriends = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_SERVER}/api/v1/register/friends/my?id=${user?._id}`);
+                const response = await axios.get(`${import.meta.env.VITE_SERVER}/api/v1/register/friends/my?_id=${user?._id}`);
                 const data = response.data;
                 setFriends(data.friends);
             } catch (error) {
@@ -125,7 +125,7 @@ const Contact = () => {
             </h1>
             }
             
-            {size>0 && 
+            {friends.length>0 && size>0 && 
             <h2>Add More Below</h2>
             }
             <button>
