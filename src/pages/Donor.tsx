@@ -49,15 +49,21 @@ const Donor = () => {
 
     const submitHandler = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const res = await axios.post(`${import.meta.env.VITE_SERVER}/api/v1/register/donor/new?id=${user?._id}`,{
-            allFormsData
-        });
-
-        if("data" in res){
-            toast.success("Thanks for Registering!");
+        try {
+            const res = await axios.post(`${import.meta.env.VITE_SERVER}/api/v1/register/donor/new?_id=${user?._id}`, {allFormsData});
+        
+            if (res.data) {
+                toast.success("Thanks for Registering!");
+            } else {
+                toast.error("An error occurred.");
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data?.message || "An unexpected error occurred.");
+            } else {
+                toast.error("An unexpected error occurred.");
+            }
         }
-        console.log('Form Submitted:', contactInfo);
-        // Handle form submission logic here
     };
 
     const nextForm = () => {
